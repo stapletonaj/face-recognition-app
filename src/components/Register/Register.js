@@ -1,6 +1,6 @@
 import React from 'react';
 
-//created a class because it needed to include states whioch get passed to the server
+//created a class because it needed to include states which get passed to the server
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -43,12 +43,9 @@ class Register extends React.Component {
     })
       .then(response => response.json())
       .then(user => {
-        if (user === 'success') {
           this.props.loadUser(user);
           this.props.onRouteChange("home");
-        }
-      })
-
+        })
   }
 
 

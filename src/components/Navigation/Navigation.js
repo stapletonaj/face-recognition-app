@@ -15,11 +15,11 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
                 <nav style={{ display: 'flex', justifyContent: "flex-end" }}>
                     <p
                         onClick={() => onRouteChange('signin')}
-                        className='f3 link dim black p3 pointer underline'>Sign in
+                        className='f3 link dim black pa3 pointer underline'>Sign in
                     </p>
                     <p
                         onClick={() => onRouteChange('register')}
-                        className='f3 link dim black p3 pointer underline'>Register
+                        className='f3 link dim black pa3 pointer underline'> Register
                     </p>
                 </nav>
             )
