@@ -30,7 +30,7 @@ class Register extends React.Component {
     });
   }
 
-  //this signin button fecthes out APIs that we've set up in the server
+  //this signin button fetches our APIs that we've set up in the server
   onSubmitSignin = () => {
     fetch('http://localhost:4000/register', {
       method: 'post',
