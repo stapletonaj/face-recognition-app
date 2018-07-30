@@ -32,9 +32,9 @@ class Register extends React.Component {
 
   //this signin button fetches our APIs that we've set up in the server
   onSubmitSignin = () => {
-    fetch('http://localhost:4000/register', {
-      method: 'post',
-      headers: { 'content-type': 'application/json' },
+    fetch(" https://immense-fjord-52577.herokuapp.com/register", {
+      method: "post",
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
         email: this.state.email,
         password: this.state.password,
@@ -43,9 +43,11 @@ class Register extends React.Component {
     })
       .then(response => response.json())
       .then(user => {
+        if (user.id) {
           this.props.loadUser(user);
           this.props.onRouteChange("home");
-        })
+        }
+      });
   }
 
 

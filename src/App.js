@@ -9,11 +9,8 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm.js";
 import Rank from "./components/Rank/Rank.js";
 import 'tachyons';
 import Particles from 'react-particles-js';
-import Clarifai from "clarifai";
 
-const app = new Clarifai.App({
-  apiKey: "aad7917382274dd09426dc25911853a6"
-});
+
 
 const particlesOptions = {
   particles: {
@@ -89,27 +86,37 @@ class App extends Component {
     this.setState({
       imageURL: this.state.input,
     })
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL, 
-      this.state.input)
+    fetch(" https://immense-fjord-52577.herokuapp.com/imageurl", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:4000/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-            id: this.state.user.id
+          fetch(
+            " https://immense-fjord-52577.herokuapp.com/image",
+            {
+              method: "put",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
+            }
+          )
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {
+                  entries: count
+                }));
             })
-          })
-          .then (response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, {entries: count}))
-          })
-          .catch(console.log)
-        this.displayFaceBox(this.calculateFaceLocation(response))
-        .catch(err => console.log(err))
+            .catch(console.log);
         }
-    })
+        this.displayFaceBox(this.calculateFaceLocation(response));
+      })
+      .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
